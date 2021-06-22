@@ -1,26 +1,71 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import PropTypes from "prop-types";
+import { View, Text, StyleSheet, StatusBar } from "react-native";
+import propTypes from "prop-types";
+import { LinearGradient } from "expo-linear-gradient";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-export default function Weather( { temp }) {
-    return (
-        <View style={styles.container}>
-            <View style={styles.halfContainer} >
-                <MaterialCommunityIcons size={ 96 } name="weather-lightning-rainy" />
-            
-            <Text style={styles.temp}>{ temp }</Text>
-            </View>
-            <View style={styles.halfContainer}>
+const weatherOptions = {
+    Haze: {
+        iconName: "weather-hail",
+        gradient: ["#4DA0B0", "#D39D38"]
+    },
+    Thunderstorm: {
+        iconName: "",
+        gradient: []
+    }, 
+    Drizzle: {
+        iconName: "",
+        gradient: []
+    }, 
+    Rain: {
+        iconName: "",
+        gradient: []
+    }, 
+    Snow: {
+        iconName: "",
+        gradient: []
+    }, 
+    Atmosphere: {
+        iconName: "",
+        gradient: []
+    }, 
+    Clear: {
+        iconName: "",
+        gradient: []
+    }, 
+    Clouds: {
+        iconName: "",
+        gradient: []
+    },
+    Mist: {
+        iconName: "",
+        gradient: []
+    }
+};
 
+export default function Weather( { temp, condition }) {
+    return (
+        <LinearGradient
+                colors={ weatherOptions[condition].gradient }
+                styles={styles.container}
+        >
+            <StatusBar barStyle="light-content" />     
+            <View style={styles.halfContainer} >
+                <MaterialCommunityIcons 
+                    size={ 96 } 
+                    name={weatherOptions[condition].iconName}
+                    color="#f9f9f9"
+                />
+            <Text style={styles.temp}>{ temp }℃</Text>
             </View>
-        </View>
+            <View style={styles.halfContainer} />
+            </LinearGradient>
     );
 }
 
-Weather.PropTypes = {
-    temp: PropTypes.number.isRequired,
-    condition: PropTypes.oneOf([
+Weather.propTypes = {
+    temp: propTypes.number.isRequired,
+    condition: propTypes.oneOf([
         "Thunderstorm", 
         "Drizzle", 
         "Rain", 
@@ -41,7 +86,8 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     temp: {
-        fontSize: 32
+        fontSize: 42,
+        color: "#f9f9f9"
     },
     halfContainer: {
         flex: 1,
