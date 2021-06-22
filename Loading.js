@@ -1,12 +1,13 @@
 import React from "react";
 import { StyleSheet, Text, View, StatusBar } from "react-native";
 
-export default function Loading() {
+export default function Loading( { condition }) {
     return (
         <View style={styles.container}>
             <StatusBar barStyle="dark-content" />
             <Text style={styles.text}>
                 Getting my Weather
+                console.log(condition);
             </Text>
         </View>
     );

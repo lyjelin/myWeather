@@ -1,7 +1,7 @@
 import React from 'react';
 import { Alert } from "react-native";
-import Loading from "./Loading.js";
-import Weather from "./Weather.js";
+import Loading from "./Loading";
+import Weather from "./Weather";
 import * as Location from 'expo-location';
 import axios from "axios";
 
@@ -12,7 +12,7 @@ export default class extends React.Component {
     isLoading: true
   };
 
-  getWeather = async( latitude, longitude ) => {
+  getWeather = async ( latitude, longitude ) => {
     const { 
       data: { 
         main: { temp },
@@ -25,7 +25,7 @@ export default class extends React.Component {
       isLoading: false, 
       condition: weather[0].main,
       temp
-    })
+    });
   };
   getLocation = async() => {
     try {
@@ -44,6 +44,10 @@ export default class extends React.Component {
   }
   render() {
     const { isLoading, temp, condition } = this.state;
-    return isLoading ? <Loading /> : <Weather temp={Math.round(temp)} condition={condition} />;
+    return isLoading ? (
+      <Loading condition={condition}/> 
+    ) : (
+      <Weather temp={Math.round(temp)} condition={condition} />
+    );
   }
-};
+}
